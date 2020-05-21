@@ -30,5 +30,10 @@ public class FirstFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });
+
+        view.findViewById(R.id.add_button).setOnClickListener(
+                (view2 -> NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_employeeEditFragment))
+        );
     }
 }
