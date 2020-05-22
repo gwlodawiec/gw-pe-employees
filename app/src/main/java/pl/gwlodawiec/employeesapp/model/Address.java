@@ -68,4 +68,12 @@ public class Address {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
+    }
 }
