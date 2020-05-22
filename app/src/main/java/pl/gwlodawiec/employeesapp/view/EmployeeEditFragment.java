@@ -93,6 +93,18 @@ public class EmployeeEditFragment extends Fragment {
                     String firstName = firstNameInput.getText().toString();
                     String lastName = lastNameInput.getText().toString();
                     String ageString = ageInput.getText().toString();
+
+                    //TODO: implement nicer validation
+                    if(firstName.isEmpty()){
+                        firstNameInput.setError("Please, provide first name");
+                        firstNameInput.requestFocus();
+                        return;
+                    }
+                    if(lastName.isEmpty()){
+                        lastNameInput.setError("Please, provide last name");
+                        lastNameInput.requestFocus();
+                        return;
+                    }
                     Integer age = 0;
                     if(!"".equals(ageString)){
                         age = Integer.parseInt(ageString);
