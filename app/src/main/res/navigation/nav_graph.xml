@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_employeeEditFragment"
             app:destination="@id/employeeEditFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_employeeListFragment"
+            app:destination="@id/employeeListFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -37,4 +40,9 @@
             android:id="@+id/action_employeeEditFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/employeeListFragment"
+        android:name="pl.gwlodawiec.employeesapp.view.EmployeeListFragment"
+        android:label="fragment_employee_list"
+        tools:layout="@layout/fragment_employee_list" />
 </navigation>

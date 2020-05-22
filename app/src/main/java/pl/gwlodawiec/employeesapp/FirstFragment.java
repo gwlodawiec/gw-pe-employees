@@ -35,5 +35,10 @@ public class FirstFragment extends Fragment {
                 (view2 -> NavHostFragment.findNavController(FirstFragment.this)
                     .navigate(R.id.action_FirstFragment_to_employeeEditFragment))
         );
+
+        view.findViewById(R.id.get_employees_button).setOnClickListener(
+                (view3 -> NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_employeeListFragment))
+        );
     }
 }

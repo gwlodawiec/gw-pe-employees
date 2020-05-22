@@ -4,8 +4,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import pl.gwlodawiec.employeesapp.database.client.DatabaseClient;
 import pl.gwlodawiec.employeesapp.model.Employee;
 import pl.gwlodawiec.employeesapp.model.types.Gender;
@@ -15,14 +19,29 @@ import pl.gwlodawiec.employeesapp.util.EmployeeFactory;
 public class EmployeeManager implements IEmployeeManager {
 
     private Context context;
+    private LifecycleOwner lifecycleOwner;
+    private LiveData<List<Employee>> employeeList;
 
-    public EmployeeManager(Context context){
+    public EmployeeManager(Context context, LifecycleOwner lifecycleOwner){
         this.context = context;
+        this.lifecycleOwner = lifecycleOwner;
+        employeeList = DatabaseClient.getInstance(context.getApplicationContext()).getDatabase().employeeDao().getAll();
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        return null;
+    public LiveData<List<Employee>> getAllEmployees() {
+//        final List<Employee>[] employeeList = new List[]{new ArrayList<Employee>()};
+//        DatabaseClient.getInstance(context.getApplicationContext()).getDatabase().employeeDao().getAll().observe(
+//                lifecycleOwner, new Observer<List<Employee>>() {
+//                    @Override
+//                    public void onChanged(List<Employee> employees) {
+//                        employeeList[0] = employees;
+//                    }
+//                }
+//        );
+//        return employeeList[0];
+
+        return employeeList;
     }
 
     @Override

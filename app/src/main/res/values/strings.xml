@@ -16,6 +16,7 @@
     <string name="add">Add Employee</string>
     <string name="previous">Previous</string>
     <string name="save">Save</string>
+    <string name="get">Show Employees</string>
 
     <!-- Input fields-->
     <string name="firstname_input">First Name</string>

@@ -12,8 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.List;
+
+import androidx.lifecycle.Observer;
 import androidx.navigation.fragment.NavHostFragment;
 import pl.gwlodawiec.employeesapp.R;
+import pl.gwlodawiec.employeesapp.model.Employee;
 import pl.gwlodawiec.employeesapp.service.EmployeeManager;
 import pl.gwlodawiec.employeesapp.service.helper.EmployeeInput;
 
@@ -68,8 +72,24 @@ public class EmployeeEditFragment extends Fragment {
                              Bundle savedInstanceState) {
         //
         if(this.employeeManager == null){
-            this.employeeManager = new EmployeeManager(getContext());
+            this.employeeManager = new EmployeeManager(getContext(), this);
         }
+        employeeManager.getAllEmployees().observe(
+                getViewLifecycleOwner(), new Observer<List<Employee>>() {
+                    @Override
+                    public void onChanged(List<Employee> employees) {
+                        //List<Employee> list = employeeManager.getAllEmployees();
+                        if(employees != null && !employees.isEmpty()){
+                            System.err.println("Employee list is NOT empty or null");
+                            for (Employee elem: employees) {
+                                System.err.println(elem);
+                            }
+                        } else {
+                            System.err.println("Employee list is empty or null");
+                        }
+                    }
+                }
+        );
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_employee_edit, container, false);
     }
@@ -80,8 +100,11 @@ public class EmployeeEditFragment extends Fragment {
 
         view.findViewById(R.id.edit_view_prev_button).setOnClickListener(
 
-                (view1) -> NavHostFragment.findNavController(EmployeeEditFragment.this)
-                        .navigate(R.id.action_employeeEditFragment_to_FirstFragment)
+                (view1) -> {
+
+                    NavHostFragment.findNavController(EmployeeEditFragment.this)
+                            .navigate(R.id.action_employeeEditFragment_to_FirstFragment);
+                }
         );
 
         view.findViewById(R.id.save_button).setOnClickListener(
@@ -119,5 +142,7 @@ public class EmployeeEditFragment extends Fragment {
 
                 }
         );
+
+
     }
 }
