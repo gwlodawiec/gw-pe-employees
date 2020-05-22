@@ -1,10 +1,12 @@
 package pl.gwlodawiec.employeesapp.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.List;
+import java.util.Optional;
 
 import androidx.lifecycle.Observer;
 import androidx.navigation.fragment.NavHostFragment;
@@ -23,6 +26,8 @@ import pl.gwlodawiec.employeesapp.model.Employee;
 import pl.gwlodawiec.employeesapp.model.types.Gender;
 import pl.gwlodawiec.employeesapp.service.EmployeeManager;
 import pl.gwlodawiec.employeesapp.service.helper.EmployeeInput;
+import pl.gwlodawiec.employeesapp.service.helper.EmployeeInputProcessor;
+import pl.gwlodawiec.employeesapp.service.helper.EmployeeInputResponse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,35 +78,20 @@ public class EmployeeEditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //
+
+        //initialize EmployeeManager
         if(this.employeeManager == null){
             this.employeeManager = new EmployeeManager(getContext(), this);
         }
-        employeeManager.getAllEmployees().observe(
-                getViewLifecycleOwner(), new Observer<List<Employee>>() {
-                    @Override
-                    public void onChanged(List<Employee> employees) {
-                        //List<Employee> list = employeeManager.getAllEmployees();
-                        if(employees != null && !employees.isEmpty()){
-                            System.err.println("Employee list is NOT empty or null");
-                            for (Employee elem: employees) {
-                                System.err.println(elem);
-                            }
-                        } else {
-                            System.err.println("Employee list is empty or null");
-                        }
-                    }
-                }
-        );
 
         View view = inflater.inflate(R.layout.fragment_employee_edit, container, false);
         Spinner gendersSpinner = view.findViewById(R.id.genders_spinner);
         gendersSpinner.setAdapter( new ArrayAdapter<Gender>(getContext(), android.R.layout.simple_list_item_1, Gender.values()));
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_employee_edit, container, false);
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -109,7 +99,6 @@ public class EmployeeEditFragment extends Fragment {
         view.findViewById(R.id.edit_view_prev_button).setOnClickListener(
 
                 (view1) -> {
-
                     NavHostFragment.findNavController(EmployeeEditFragment.this)
                             .navigate(R.id.action_employeeEditFragment_to_FirstFragment);
                 }
@@ -117,43 +106,20 @@ public class EmployeeEditFragment extends Fragment {
 
         view.findViewById(R.id.save_button).setOnClickListener(
                 (view2) -> {
-                    EditText firstNameInput = view.findViewById(R.id.firstname_input);
-                    EditText lastNameInput = view.findViewById(R.id.lastname_input);
-                    EditText ageInput = view.findViewById(R.id.age_input);
-                    Spinner genderInput = view.findViewById(R.id.genders_spinner);
 
-                    String firstName = firstNameInput.getText().toString();
-                    String lastName = lastNameInput.getText().toString();
-                    String ageString = ageInput.getText().toString();
-                    Gender gender = (Gender) genderInput.getSelectedItem();
+                    EmployeeInputResponse inputProcessorRes = EmployeeInputProcessor.processEmployeeInput(view);
 
-                    //TODO: implement nicer validation
-                    if(firstName.isEmpty()){
-                        firstNameInput.setError("Please, provide first name");
-                        firstNameInput.requestFocus();
-                        return;
+                    if(!inputProcessorRes.hasErrors()){
+                        Optional<EmployeeInput> employeeInput = Optional.ofNullable(inputProcessorRes.getInput());
+                        employeeInput.ifPresent(in -> {
+                            employeeManager.addEmployee(in);
+                        });
+
+                        NavHostFragment.findNavController(EmployeeEditFragment.this)
+                            .navigate(R.id.action_employeeEditFragment_to_FirstFragment);
                     }
-                    if(lastName.isEmpty()){
-                        lastNameInput.setError("Please, provide last name");
-                        lastNameInput.requestFocus();
-                        return;
-                    }
-                    Integer age = 0;
-                    if(!"".equals(ageString)){
-                        age = Integer.parseInt(ageString);
-                    }
-
-                    EmployeeInput employeeInput = new EmployeeInput();
-                    employeeInput.setFirstName(firstName);
-                    employeeInput.setLastName(lastName);
-                    employeeInput.setAge(age);
-                    employeeInput.setGender(gender);
-
-                    employeeManager.addEmployee(employeeInput);
-
                 }
         );
-
-
     }
+
 }

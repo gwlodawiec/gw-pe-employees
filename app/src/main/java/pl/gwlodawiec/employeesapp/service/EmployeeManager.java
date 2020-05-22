@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LifecycleOwner;
@@ -47,7 +46,10 @@ public class EmployeeManager implements IEmployeeManager {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                DatabaseClient.getInstance(context.getApplicationContext()).getDatabase().employeeDao().saveEmployee(employee);
+                DatabaseClient.getInstance(context.getApplicationContext())
+                        .getDatabase()
+                        .employeeDao()
+                        .saveEmployee(employee);
                 return null;
             }
 
@@ -66,7 +68,10 @@ public class EmployeeManager implements IEmployeeManager {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                DatabaseClient.getInstance(context.getApplicationContext()).getDatabase().employeeDao().deleteEmployee(employee);
+                DatabaseClient.getInstance(context.getApplicationContext())
+                        .getDatabase()
+                        .employeeDao()
+                        .deleteEmployee(employee);
                 return null;
             }
 

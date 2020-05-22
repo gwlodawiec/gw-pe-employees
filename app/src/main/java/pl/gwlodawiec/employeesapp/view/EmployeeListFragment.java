@@ -73,6 +73,7 @@ public class EmployeeListFragment extends Fragment implements EmployeeListAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //initialize EmployeeManager
         if(this.employeeManager == null){
             this.employeeManager = new EmployeeManager(getContext(), this);
         }
@@ -99,15 +100,8 @@ public class EmployeeListFragment extends Fragment implements EmployeeListAdapte
                 getViewLifecycleOwner(), new Observer<List<Employee>>() {
                     @Override
                     public void onChanged(List<Employee> employees) {
-                        //List<Employee> list = employeeManager.getAllEmployees();
                         if(employees != null && !employees.isEmpty()){
-                            System.err.println("Employee list is NOT empty or null");
                             employeeListAdapter.setEmployees(employees);
-                            for (Employee elem: employees) {
-                                System.err.println(elem);
-                            }
-                        } else {
-                            System.err.println("Employee list is empty or null");
                         }
                     }
                 }
@@ -117,7 +111,6 @@ public class EmployeeListFragment extends Fragment implements EmployeeListAdapte
 
     @Override
     public void onDeleteClickListener(Employee employee) {
-        System.err.println("ON DELETE in fragment");
         employeeManager.delete(employee);
     }
 }
