@@ -4,7 +4,14 @@ import java.util.List;
 
 import pl.gwlodawiec.employeesapp.model.Employee;
 
-public interface EmployeeManager {
-    public List<Employee> getAllEmployees();
-    public void addEmployee(Employee employee);
+public class EmployeeManager implements IEmployeeManager {
+    @Override
+    public List<Employee> getAllEmployees() {
+        return null;
+    }
+
+    @Override
+    public void addEmployee(Employee employee) {
+
+    }
 }

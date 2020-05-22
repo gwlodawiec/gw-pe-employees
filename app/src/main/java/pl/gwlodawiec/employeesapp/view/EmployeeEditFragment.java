@@ -30,6 +30,7 @@ public class EmployeeEditFragment extends Fragment {
     private String mParam2;
 
     public EmployeeEditFragment() {
+        System.err.println("CONSTRUCTOR");
         // Required empty public constructor
     }
 
