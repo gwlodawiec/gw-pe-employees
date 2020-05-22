@@ -2,12 +2,16 @@ package pl.gwlodawiec.employeesapp.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import androidx.navigation.fragment.NavHostFragment;
 import pl.gwlodawiec.employeesapp.R;
 
 /**
@@ -61,5 +65,23 @@ public class EmployeeEditFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_employee_edit, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.edit_view_prev_button).setOnClickListener(
+                (view1) -> NavHostFragment.findNavController(EmployeeEditFragment.this)
+                        .navigate(R.id.action_employeeEditFragment_to_FirstFragment)
+        );
+
+        view.findViewById(R.id.save_button).setOnClickListener(
+                (view2) -> {
+                    EditText firstNameInput = view.findViewById(R.id.firstname_input);
+                    EditText lastNameInput = view.findViewById(R.id.lastname_input);
+
+                }
+        );
     }
 }

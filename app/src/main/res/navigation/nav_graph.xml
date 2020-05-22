@@ -32,5 +32,9 @@
         android:id="@+id/employeeEditFragment"
         android:name="pl.gwlodawiec.employeesapp.view.EmployeeEditFragment"
         android:label="fragment_employee_edit"
-        tools:layout="@layout/fragment_employee_edit" />
+        tools:layout="@layout/fragment_employee_edit" >
+        <action
+            android:id="@+id/action_employeeEditFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
 </navigation>
