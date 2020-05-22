@@ -1,11 +1,19 @@
 package pl.gwlodawiec.employeesapp.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import pl.gwlodawiec.employeesapp.model.types.Gender;
 
+@Entity
 public class Employee {
-    private long id;
+    @PrimaryKey
+    private int id;
+    @ColumnInfo(name = "first_name")
     private String firstName;
+    @ColumnInfo(name = "last_name")
     private String lastName;
+    @ColumnInfo(name = "age")
     private int age;
     private Gender gender;
 
@@ -13,7 +21,7 @@ public class Employee {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
