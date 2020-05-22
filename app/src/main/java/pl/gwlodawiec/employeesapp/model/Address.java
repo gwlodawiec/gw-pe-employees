@@ -1,11 +1,33 @@
 package pl.gwlodawiec.employeesapp.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Address {
+    @PrimaryKey
+    private long id;
+    @ColumnInfo
     private String city;
+    @ColumnInfo
     private String zip;
+    @ColumnInfo
     private String street;
+    @ColumnInfo
     private String building;
+    @ColumnInfo
     private String department;
+
+    private long employeeId;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getCity() {
         return city;

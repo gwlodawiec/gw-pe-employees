@@ -8,7 +8,7 @@ import pl.gwlodawiec.employeesapp.model.types.Gender;
 @Entity
 public class Employee {
     @PrimaryKey
-    private int id;
+    private long id;
     @ColumnInfo(name = "first_name")
     private String firstName;
     @ColumnInfo(name = "last_name")
@@ -21,7 +21,7 @@ public class Employee {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
