@@ -9,13 +9,16 @@ import java.util.List;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import pl.gwlodawiec.employeesapp.database.client.DatabaseClient;
 import pl.gwlodawiec.employeesapp.model.Employee;
-import pl.gwlodawiec.employeesapp.model.types.Gender;
 import pl.gwlodawiec.employeesapp.service.helper.EmployeeInput;
 import pl.gwlodawiec.employeesapp.util.EmployeeFactory;
 
+/**
+ * Service class for managing employees
+ *
+ * Allows add/get operations on employees stored at in-memory database
+ */
 public class EmployeeManager implements IEmployeeManager {
 
     private Context context;
@@ -36,7 +39,6 @@ public class EmployeeManager implements IEmployeeManager {
     @Override
     public void addEmployee(EmployeeInput employeeInput) {
         Employee employee = EmployeeFactory.employeeFromEmployeeInput(employeeInput);
-//        employee.setGender(Gender.MALE);
         saveEmployee(employee);
     }
 
@@ -57,5 +59,24 @@ public class EmployeeManager implements IEmployeeManager {
         }
         SaveEmployee saveEmployee = new SaveEmployee();
         saveEmployee.execute();
+    }
+
+    public void delete(Employee employee){
+        class DeleteEmployee extends AsyncTask<Void, Void, Void>{
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient.getInstance(context.getApplicationContext()).getDatabase().employeeDao().deleteEmployee(employee);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Toast.makeText(context.getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
+            }
+        }
+        DeleteEmployee deleteEmployee = new DeleteEmployee();
+        deleteEmployee.execute();
     }
 }

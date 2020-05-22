@@ -3,6 +3,9 @@ package pl.gwlodawiec.employeesapp.util;
 import androidx.room.TypeConverter;
 import pl.gwlodawiec.employeesapp.model.types.Gender;
 
+/**
+ * Converter for Gender enum. Gender values are stored in DB as integer keys
+ */
 public class GenderConverter {
 
     @TypeConverter

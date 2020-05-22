@@ -2,6 +2,9 @@ package pl.gwlodawiec.employeesapp.service.helper;
 
 import pl.gwlodawiec.employeesapp.model.types.Gender;
 
+/**
+ * Helper class for holding employee's data from user input
+ */
 public class EmployeeInput {
 
     private String firstName;

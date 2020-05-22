@@ -25,7 +25,7 @@ import java.util.List;
  * Use the {@link EmployeeListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmployeeListFragment extends Fragment {
+public class EmployeeListFragment extends Fragment implements EmployeeListAdapter.OnDeleteClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,7 +90,7 @@ public class EmployeeListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView employeeListWidget = view.findViewById(R.id.employee_list);
-        employeeListAdapter = new EmployeeListAdapter(getContext());
+        employeeListAdapter = new EmployeeListAdapter(getContext(), this);
         employeeListWidget.setAdapter(employeeListAdapter);
         employeeListWidget.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         employeeListWidget.setHasFixedSize(true);
@@ -113,5 +113,11 @@ public class EmployeeListFragment extends Fragment {
                 }
         );
 
+    }
+
+    @Override
+    public void onDeleteClickListener(Employee employee) {
+        System.err.println("ON DELETE in fragment");
+        employeeManager.delete(employee);
     }
 }

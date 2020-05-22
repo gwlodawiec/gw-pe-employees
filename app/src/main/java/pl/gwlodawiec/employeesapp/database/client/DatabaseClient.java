@@ -5,6 +5,9 @@ import android.content.Context;
 import androidx.room.Room;
 import pl.gwlodawiec.employeesapp.database.MainDatabase;
 
+/**
+ * Room in-memory database client
+ */
 public class DatabaseClient {
 
     private Context context;
