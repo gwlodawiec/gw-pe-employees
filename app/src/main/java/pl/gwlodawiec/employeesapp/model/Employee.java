@@ -7,7 +7,7 @@ import pl.gwlodawiec.employeesapp.model.types.Gender;
 
 @Entity
 public class Employee {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
     @ColumnInfo(name = "first_name")
     private String firstName;

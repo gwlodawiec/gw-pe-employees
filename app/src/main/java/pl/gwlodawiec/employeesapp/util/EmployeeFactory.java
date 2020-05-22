@@ -10,6 +10,7 @@ public class EmployeeFactory {
         employee.setFirstName(employeeInput.getFirstName());
         employee.setLastName(employeeInput.getLastName());
         employee.setAge(employeeInput.getAge());
+        employee.setGender(employeeInput.getGender());
         return employee;
     }
 }

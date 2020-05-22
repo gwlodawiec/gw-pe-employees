@@ -1,10 +1,13 @@
 package pl.gwlodawiec.employeesapp.service.helper;
 
+import pl.gwlodawiec.employeesapp.model.types.Gender;
+
 public class EmployeeInput {
 
     private String firstName;
     private String lastName;
     private int age;
+    private Gender gender;
 
     public String getFirstName() {
         return firstName;
@@ -28,5 +31,13 @@ public class EmployeeInput {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

@@ -14,10 +14,10 @@ import pl.gwlodawiec.employeesapp.model.EmployeeAddresses;
 @Dao
 public interface EmployeeDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     public void saveEmployee(Employee employee);
 
-    @Query("select * from employee order by id desc")
+    @Query("select * from employee order by id asc")
     LiveData<List<Employee>> getAll();
 
     @Transaction

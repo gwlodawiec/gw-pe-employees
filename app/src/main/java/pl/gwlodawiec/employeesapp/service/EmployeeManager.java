@@ -30,24 +30,13 @@ public class EmployeeManager implements IEmployeeManager {
 
     @Override
     public LiveData<List<Employee>> getAllEmployees() {
-//        final List<Employee>[] employeeList = new List[]{new ArrayList<Employee>()};
-//        DatabaseClient.getInstance(context.getApplicationContext()).getDatabase().employeeDao().getAll().observe(
-//                lifecycleOwner, new Observer<List<Employee>>() {
-//                    @Override
-//                    public void onChanged(List<Employee> employees) {
-//                        employeeList[0] = employees;
-//                    }
-//                }
-//        );
-//        return employeeList[0];
-
         return employeeList;
     }
 
     @Override
     public void addEmployee(EmployeeInput employeeInput) {
         Employee employee = EmployeeFactory.employeeFromEmployeeInput(employeeInput);
-        employee.setGender(Gender.MALE);
+//        employee.setGender(Gender.MALE);
         saveEmployee(employee);
     }
 

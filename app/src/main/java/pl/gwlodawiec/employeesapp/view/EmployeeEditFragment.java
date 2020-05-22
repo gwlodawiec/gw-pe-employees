@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.navigation.fragment.NavHostFragment;
 import pl.gwlodawiec.employeesapp.R;
 import pl.gwlodawiec.employeesapp.model.Employee;
+import pl.gwlodawiec.employeesapp.model.types.Gender;
 import pl.gwlodawiec.employeesapp.service.EmployeeManager;
 import pl.gwlodawiec.employeesapp.service.helper.EmployeeInput;
 
@@ -90,8 +93,13 @@ public class EmployeeEditFragment extends Fragment {
                     }
                 }
         );
+
+        View view = inflater.inflate(R.layout.fragment_employee_edit, container, false);
+        Spinner gendersSpinner = view.findViewById(R.id.genders_spinner);
+        gendersSpinner.setAdapter( new ArrayAdapter<Gender>(getContext(), android.R.layout.simple_list_item_1, Gender.values()));
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_employee_edit, container, false);
+//        return inflater.inflate(R.layout.fragment_employee_edit, container, false);
+        return view;
     }
 
     @Override
@@ -112,10 +120,12 @@ public class EmployeeEditFragment extends Fragment {
                     EditText firstNameInput = view.findViewById(R.id.firstname_input);
                     EditText lastNameInput = view.findViewById(R.id.lastname_input);
                     EditText ageInput = view.findViewById(R.id.age_input);
+                    Spinner genderInput = view.findViewById(R.id.genders_spinner);
 
                     String firstName = firstNameInput.getText().toString();
                     String lastName = lastNameInput.getText().toString();
                     String ageString = ageInput.getText().toString();
+                    Gender gender = (Gender) genderInput.getSelectedItem();
 
                     //TODO: implement nicer validation
                     if(firstName.isEmpty()){
@@ -137,6 +147,7 @@ public class EmployeeEditFragment extends Fragment {
                     employeeInput.setFirstName(firstName);
                     employeeInput.setLastName(lastName);
                     employeeInput.setAge(age);
+                    employeeInput.setGender(gender);
 
                     employeeManager.addEmployee(employeeInput);
 
