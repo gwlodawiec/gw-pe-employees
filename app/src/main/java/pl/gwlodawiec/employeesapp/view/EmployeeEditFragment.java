@@ -1,5 +1,6 @@
 package pl.gwlodawiec.employeesapp.view;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 
 import androidx.navigation.fragment.NavHostFragment;
 import pl.gwlodawiec.employeesapp.R;
+import pl.gwlodawiec.employeesapp.service.EmployeeManager;
+import pl.gwlodawiec.employeesapp.service.helper.EmployeeInput;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,14 +28,13 @@ public class EmployeeEditFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private EmployeeManager employeeManager;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public EmployeeEditFragment() {
-        System.err.println("CONSTRUCTOR");
-        // Required empty public constructor
-    }
+    public EmployeeEditFragment() { }
 
     /**
      * Use this factory method to create a new instance of
@@ -64,6 +66,10 @@ public class EmployeeEditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //
+        if(this.employeeManager == null){
+            this.employeeManager = new EmployeeManager(getContext());
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_employee_edit, container, false);
     }
@@ -73,6 +79,7 @@ public class EmployeeEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.edit_view_prev_button).setOnClickListener(
+
                 (view1) -> NavHostFragment.findNavController(EmployeeEditFragment.this)
                         .navigate(R.id.action_employeeEditFragment_to_FirstFragment)
         );
@@ -81,6 +88,22 @@ public class EmployeeEditFragment extends Fragment {
                 (view2) -> {
                     EditText firstNameInput = view.findViewById(R.id.firstname_input);
                     EditText lastNameInput = view.findViewById(R.id.lastname_input);
+                    EditText ageInput = view.findViewById(R.id.age_input);
+
+                    String firstName = firstNameInput.getText().toString();
+                    String lastName = lastNameInput.getText().toString();
+                    String ageString = ageInput.getText().toString();
+                    Integer age = 0;
+                    if(!"".equals(ageString)){
+                        age = Integer.parseInt(ageString);
+                    }
+
+                    EmployeeInput employeeInput = new EmployeeInput();
+                    employeeInput.setFirstName(firstName);
+                    employeeInput.setLastName(lastName);
+                    employeeInput.setAge(age);
+
+                    employeeManager.addEmployee(employeeInput);
 
                 }
         );
